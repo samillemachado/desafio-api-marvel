@@ -9,8 +9,10 @@ const Pag: React.FC = () => {
       spacing={2}
       sx={{
         background: defaultTheme.palette.primary.light,
-        marginTop: 5,
-        marginBottom: 5,
+        height: 100,
+        marginTop: 15,
+        paddingTop: 5,
+        paddingBottom: 5,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',

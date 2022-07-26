@@ -70,7 +70,7 @@ const Header: React.FC = () => {
           height: 100,
         }}
       >
-        <SearchIcon sx={{ color: defaultTheme.palette.primary.light, mr: 1 }} />
+        <SearchIcon sx={{ mr: 1 }} />
         <TextField
           sx={{ color: defaultTheme.palette.primary.light }}
           id="input-with-sx"

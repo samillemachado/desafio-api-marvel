@@ -8,7 +8,7 @@ const defaultTheme = createTheme({
       light: '#fff',
     },
     secondary: {
-      main: '#202020',
+      main: '#212121',
     },
   },
   typography: {

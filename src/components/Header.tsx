@@ -11,7 +11,6 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import logoMarvel from '../assets/images/logo-marvel.png';
-import avengersMarvel from '../assets/images/avengers-marvel.jpg';
 import defaultTheme from '../config/theme/Default';
 
 const Header: React.FC = () => {
@@ -21,42 +20,41 @@ const Header: React.FC = () => {
         direction="row"
         spacing={2}
         sx={{
-          height: 120,
+          height: 150,
           bgcolor: '#fff',
           margin: 0,
           padding: 0,
         }}
       >
-        <ListItem sx={{ margin: 0, padding: 0, width: 200 }}>
-          <img src={`${logoMarvel}`} alt="logo-marvel" width="200" />
-        </ListItem>
         <ListItem
           sx={{
             display: 'flex',
             justifyContent: 'space-around',
             alignItems: 'center',
             flexDirection: 'row',
-            color: '#EC1D24',
           }}
         >
           <Typography variant="h5">
-            <Link href="#" underline="none">
+            <Link
+              href="#"
+              underline="none"
+              sx={{ color: defaultTheme.palette.primary.main }}
+            >
               CHARACTERS
             </Link>
           </Typography>
+          <ListItem sx={{ margin: 0, padding: 0, width: 200 }}>
+            <img src={`${logoMarvel}`} alt="logo-marvel" width="200" />
+          </ListItem>
           <Typography variant="h5">
-            <Link href="#" underline="none">
-              COMICS
+            <Link
+              href="#"
+              underline="none"
+              sx={{ color: defaultTheme.palette.primary.main }}
+            >
+              MY COLLECTION
             </Link>
           </Typography>
-          <Typography variant="h5">
-            <Link href="#" underline="none">
-              FILMS
-            </Link>
-          </Typography>
-        </ListItem>
-        <ListItem sx={{ margin: 0, padding: 0, width: 200 }}>
-          <img src={`${avengersMarvel}`} alt="avengers-marvel" width="200" />
         </ListItem>
       </Stack>
       <Stack
@@ -65,18 +63,23 @@ const Header: React.FC = () => {
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
-          justifyContent: 'center',
-          bgcolor: defaultTheme.palette.secondary.main,
-          height: 100,
+          justifyContent: 'flex-end',
+          bgcolor: defaultTheme.palette.primary.main,
+          height: 55,
         }}
       >
-        <SearchIcon sx={{ mr: 1 }} />
         <TextField
-          sx={{ color: defaultTheme.palette.primary.light }}
-          id="input-with-sx"
+          sx={{
+            color: defaultTheme.palette.primary.light,
+            marginBottom: 1,
+            marginRight: 2,
+          }}
+          id="standard-size-small"
           label="Search Character"
           variant="standard"
+          size="small"
         />
+        <SearchIcon sx={{ mr: 2 }} />
       </Stack>
     </Container>
   );

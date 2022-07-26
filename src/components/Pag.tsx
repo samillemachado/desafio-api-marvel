@@ -10,7 +10,7 @@ const Pag: React.FC = () => {
       sx={{
         background: defaultTheme.palette.primary.light,
         height: 100,
-        marginTop: 15,
+        marginTop: 10,
         paddingTop: 5,
         paddingBottom: 5,
         display: 'flex',

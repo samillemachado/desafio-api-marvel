@@ -2,20 +2,20 @@ import React, { useEffect } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Pag from '../components/Pag';
-import ContentPage from '../components/ContentPage';
-import { getAll } from '../store/modules/characters/charactersSlice';
+import ContentCards from '../components/ContentCards';
+import { getAllCharacters } from '../store/modules/characters/charactersSlice';
 import { useAppDispatch } from '../store/types-hooks';
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(getAll());
+    dispatch(getAllCharacters());
   }, []);
 
   return (
     <>
       <Header />
-      <ContentPage />
+      <ContentCards />
       <Pag />
       <Footer />
     </>

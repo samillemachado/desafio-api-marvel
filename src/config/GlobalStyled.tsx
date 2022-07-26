@@ -10,6 +10,7 @@ const GlobalStyled = createGlobalStyle`
 
     body {
         overflow-x: hidden;
+        background: radial-gradient(circle, hsla(357, 85%, 52%, 1) 0%, hsla(0, 0%, 0%, 1) 100%);
     }
 `;
 

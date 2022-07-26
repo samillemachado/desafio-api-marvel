@@ -14,6 +14,7 @@ export interface Character {
     path: string;
     extension: string;
   };
+  comics: string[];
 }
 
 const adapter = createEntityAdapter<Character>({
@@ -24,14 +25,17 @@ export const { selectAll, selectById } = adapter.getSelectors<RootState>(
   (state) => state.characters
 );
 
-export const getAll = createAsyncThunk<any>('getAllCharacters', async () => {
-  const { data } = await marvel.get('/characters');
-  const parse = JSON.parse(data);
-  if (parse.code === 200) {
-    return parse.data.results;
+export const getAllCharacters = createAsyncThunk<any>(
+  'getAllCharacters',
+  async () => {
+    const { data } = await marvel.get('/characters');
+    const parse = JSON.parse(data);
+    if (parse.code === 200) {
+      return parse.data.results;
+    }
+    return [];
   }
-  return [];
-});
+);
 
 const charactersSlice = createSlice({
   name: 'characters',
@@ -44,13 +48,13 @@ const charactersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getAll.pending, (state, action) => {
+      .addCase(getAllCharacters.pending, (state, action) => {
         console.log('loading');
       })
-      .addCase(getAll.fulfilled, (state, action) => {
+      .addCase(getAllCharacters.fulfilled, (state, action) => {
         adapter.setAll(state, action.payload);
       })
-      .addCase(getAll.rejected, (state, action) => {
+      .addCase(getAllCharacters.rejected, (state, action) => {
         console.log('deu ruim');
       });
   },

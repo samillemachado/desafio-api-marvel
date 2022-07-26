@@ -10,12 +10,14 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import { selectAll } from '../store/modules/characters/charactersSlice';
+// import { selectAll } from '../store/modules/comics/comicsSlice';
 import defaultTheme from '../config/theme/Default';
 import { useAppSelector } from '../store/types-hooks';
 import ModalDescription from './ModalDescription';
 
 const ContentCards: React.FC = () => {
   const charactersRedux = useAppSelector(selectAll);
+  const comicsRedux = useAppSelector(selectAll);
 
   const [open, setOpen] = useState<boolean>(false);
   const [id, setId] = useState<number>(0);
@@ -30,7 +32,7 @@ const ContentCards: React.FC = () => {
         {charactersRedux.map((item) => {
           return (
             <Grid key={item.id} item xs={3}>
-              <Card sx={{ maxWidth: 345, height: 450, marginBottom: 5 }}>
+              <Card sx={{ maxWidth: 345, height: 450 }}>
                 <CardMedia
                   component="img"
                   height="270"

@@ -3,21 +3,23 @@ import React from 'react';
 
 const Footer: React.FC = () => {
   return (
-    <>
-      <Stack
-        sx={{
-          display: 'flex',
-          alignItems: 'flex-end',
-          bgcolor: '#202020',
-          height: '100px',
-        }}
-      >
-        <Typography sx={{ color: '#fff' }}>
-          Desenvolvido por Samille B. Machado para &copy; Growdev - 2022
-        </Typography>
-      </Stack>
-      ;
-    </>
+    <Stack
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        bgcolor: '#202020',
+        height: '100px',
+        justifyContent: 'center',
+        margin: 0,
+      }}
+    >
+      <Typography sx={{ color: '#fff', fontFamily: 'Roboto', fontWeight: 300 }}>
+        - Desafio API Developer Marvel -
+      </Typography>
+      <Typography sx={{ color: '#fff', fontFamily: 'Roboto', fontWeight: 300 }}>
+        por Samille B. Machado para &copy; Growdev - 2022
+      </Typography>
+    </Stack>
   );
 };
 

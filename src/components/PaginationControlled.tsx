@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Pagination from '@mui/material/Pagination';
 import { Stack } from '@mui/material';
 import defaultTheme from '../config/theme/Default';
 
-const Pag: React.FC = () => {
+export default function PaginationControlled() {
+  const [page, setPage] = React.useState(1);
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
+  // useEffect(() => {}, [page]);
+
   return (
     <Stack
       spacing={2}
@@ -18,8 +25,7 @@ const Pag: React.FC = () => {
         alignItems: 'center',
       }}
     >
-      <Pagination count={10} color="primary" />
+      <Pagination count={10} page={page} onChange={handleChange} />
     </Stack>
   );
-};
-export default Pag;
+}

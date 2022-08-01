@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   CardActions,
   CardContent,
@@ -11,22 +10,37 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { relative } from 'path';
-import { selectAll } from '../store/modules/characters/charactersSlice';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { EntityId } from '@reduxjs/toolkit';
+import {
+  selectAll,
+  upsertOne,
+} from '../store/modules/characters/charactersSlice';
 // import { selectAll } from '../store/modules/comics/comicsSlice';
 import defaultTheme from '../config/theme/Default';
-import { useAppSelector } from '../store/types-hooks';
+import { useAppDispatch, useAppSelector } from '../store/types-hooks';
 import ModalDescription from './ModalDescription';
+import { getCharacterById } from '../store/modules/characters/characterSlice';
+import { selectCharacter } from '../store/modules/characters/selectedCharacterSlice';
 
 const ContentCards: React.FC = () => {
   const charactersRedux = useAppSelector(selectAll);
-  const comicsRedux = useAppSelector(selectAll);
 
   const [open, setOpen] = useState<boolean>(false);
-  const [id, setId] = useState<number>(0);
-  const handleOpen = (selectedId: number) => {
+
+  const dispatch = useAppDispatch();
+
+  const handleOpen = (itemId: EntityId) => {
+    dispatch(selectCharacter(itemId));
+    dispatch(getCharacterById(itemId));
     setOpen(true);
-    setId(selectedId);
+  };
+
+  const handleFavorite = (
+    favoriteId: EntityId,
+    favorite: boolean | undefined
+  ) => {
+    dispatch(upsertOne({ id: favoriteId, favorite: !favorite }));
   };
 
   return (
@@ -49,7 +63,7 @@ const ContentCards: React.FC = () => {
                   className="scale-up-center"
                   component="img"
                   height="270"
-                  image={`${item.thumbnail.path}.${item.thumbnail.extension}`}
+                  image={`${item?.thumbnail?.path}.${item?.thumbnail?.extension}`}
                   alt={item.name}
                   onClick={() => handleOpen(item.id)}
                 />
@@ -94,16 +108,22 @@ const ContentCards: React.FC = () => {
                       fontFamily: defaultTheme.typography.fontFamily,
                       color: defaultTheme.palette.primary.main,
                     }}
+                    onClick={() => handleFavorite(item.id, item.favorite)}
                   >
-                    <FavoriteBorderIcon className="scale-up-center" />
+                    {' '}
+                    {item.favorite ? (
+                      <FavoriteIcon className="scale-up-center" />
+                    ) : (
+                      <FavoriteBorderIcon className="scale-up-center" />
+                    )}
                   </IconButton>
-                  <ModalDescription state={open} setState={setOpen} id={id} />
                 </CardActions>
               </Card>
             </Grid>
           );
         })}
       </Grid>
+      <ModalDescription modalState={open} setModalState={setOpen} />
     </Container>
   );
 };

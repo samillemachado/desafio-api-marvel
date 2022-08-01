@@ -33,8 +33,11 @@ class Marvel {
 
   async get(route: string): Promise<any> {
     const response = await this.client.get(route + this.authentication);
-
-    return response;
+    if (response.status === 200) {
+      const parseData = JSON.parse(response.data);
+      return parseData;
+    }
+    return [];
   }
 }
 

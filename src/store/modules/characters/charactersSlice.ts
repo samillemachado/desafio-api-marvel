@@ -2,19 +2,21 @@ import {
   createAsyncThunk,
   createEntityAdapter,
   createSlice,
+  EntityId,
 } from '@reduxjs/toolkit';
 import { RootState } from '../..';
 import marvel from '../../../services/marvel/marvel';
 
 export interface Character {
-  id: number;
-  name: string;
-  description: string;
-  thumbnail: {
+  id: EntityId;
+  name?: string;
+  description?: string;
+  thumbnail?: {
     path: string;
     extension: string;
   };
-  comics: string[];
+  comics?: string[];
+  favorite?: boolean;
 }
 
 const adapter = createEntityAdapter<Character>({
@@ -22,43 +24,40 @@ const adapter = createEntityAdapter<Character>({
 });
 
 export const { selectAll, selectById } = adapter.getSelectors<RootState>(
-  (state) => state.characters
+  (state): any => state.characters
 );
 
-export const getAllCharacters = createAsyncThunk<any>(
+export const getAllCharacters = createAsyncThunk(
   'getAllCharacters',
   async () => {
-    const { data } = await marvel.get('/characters');
-    const parse = JSON.parse(data);
-    if (parse.code === 200) {
-      return parse.data.results;
-    }
-    return [];
+    const response = await marvel.get('/characters');
+    return response.data.results;
   }
 );
 
 const charactersSlice = createSlice({
   name: 'characters',
-  initialState: adapter.getInitialState(),
+  initialState: adapter.getInitialState({ loading: false }), // chaves personalizadas(pode qualquer coisa), além do que ele tem como padrão (id e entities)
   reducers: {
     addOne: adapter.addOne,
     addMany: adapter.addMany,
     updateOne: adapter.updateOne,
     setAll: adapter.setAll,
+    upsertOne: adapter.upsertOne,
   },
   extraReducers: (builder) => {
     builder
       .addCase(getAllCharacters.pending, (state, action) => {
-        console.log('loading');
+        // state.loading = true;
       })
       .addCase(getAllCharacters.fulfilled, (state, action) => {
         adapter.setAll(state, action.payload);
       })
       .addCase(getAllCharacters.rejected, (state, action) => {
-        console.log('deu ruim');
+        // state.loading = false;
       });
   },
 });
 
-export const { addOne, addMany, updateOne } = charactersSlice.actions;
+export const { upsertOne } = charactersSlice.actions;
 export default charactersSlice.reducer;

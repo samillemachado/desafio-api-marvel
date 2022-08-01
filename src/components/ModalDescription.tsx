@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import React from 'react';
 import defaultTheme from '../config/theme/Default';
-import { selectAll } from '../store/modules/characters/charactersSlice';
+import { selectById } from '../store/modules/characters/characterSlice';
 import { useAppSelector } from '../store/types-hooks';
 
 const style = {
@@ -22,27 +22,32 @@ const style = {
   width: 800,
   height: 600,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
   boxShadow: 24,
-  p: 3,
+  p: 2,
 };
 
 interface ModalProps {
-  state: boolean;
-  setState: React.Dispatch<React.SetStateAction<boolean>>;
-  id: number;
+  modalState: boolean;
+  setModalState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ModalDescription: React.FC<ModalProps> = ({ state, setState, id }) => {
+const ModalDescription: React.FC<ModalProps> = ({
+  modalState,
+  setModalState,
+}) => {
   const handleClose = () => {
-    setState(false);
+    setModalState(false);
   };
 
-  const character = useAppSelector(selectAll).find((char) => char.id === id);
+  const selectedCharacter = useAppSelector((state) => state.selectCharacter);
+
+  const character = useAppSelector((state) =>
+    selectById(state, selectedCharacter)
+  );
 
   return (
     <Modal
-      open={state}
+      open={modalState}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
@@ -51,11 +56,11 @@ const ModalDescription: React.FC<ModalProps> = ({ state, setState, id }) => {
         <Container sx={{ marginBottom: 5 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Card sx={{ display: 'flex' }}>
+              <Card sx={{ display: 'flex', alignItems: 'center' }}>
                 <CardMedia
                   component="img"
-                  sx={{ width: 300, height: 250 }}
-                  image={`${character?.thumbnail.path}.${character?.thumbnail.extension}`}
+                  sx={{ width: 300, height: 250, background: 'primary' }}
+                  image={`${character?.thumbnail?.path}.${character?.thumbnail?.extension}`}
                   alt={`${character?.name}`}
                 />
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -64,6 +69,7 @@ const ModalDescription: React.FC<ModalProps> = ({ state, setState, id }) => {
                       component="div"
                       variant="h4"
                       sx={{
+                        height: 30,
                         fontFamily: defaultTheme.typography.fontFamily,
                         color: defaultTheme.palette.primary.main,
                       }}
@@ -75,22 +81,24 @@ const ModalDescription: React.FC<ModalProps> = ({ state, setState, id }) => {
                     sx={{
                       display: 'flex',
                       alignItems: 'center',
-                      pl: 1,
-                      pb: 5,
-                      pr: 5,
-                      pt: 5,
+                      pl: 2,
+                      pb: 2,
+                      pr: 2,
+                      pt: 2,
                     }}
                   >
                     <Typography
                       variant="subtitle1"
                       color="text.secondary"
                       component="div"
-                      sx={{ fontFamily: 'Roboto', textAlign: 'justify' }}
+                      sx={{
+                        height: 150,
+                        fontFamily: 'Roboto',
+                        textAlign: 'justify',
+                        overflow: 'auto',
+                      }}
                     >
                       {`${character?.description}`}
-                      Lorem Ipsum passages, and more recently with desktop
-                      publishing software like Aldus PageMaker including
-                      versions of Lorem Ipsum.
                     </Typography>
                   </Box>
                 </Box>
@@ -98,6 +106,72 @@ const ModalDescription: React.FC<ModalProps> = ({ state, setState, id }) => {
             </Grid>
           </Grid>
           <Grid container spacing={3} sx={{ marginTop: 1 }}>
+            <Grid item xs={3}>
+              <Paper
+                elevation={2}
+                sx={{
+                  maxWidth: 345,
+                  height: 230,
+                  marginBottom: 2,
+                  borderRadius: 0,
+                }}
+              >
+                <img src="" alt="Imagem da Comics" width="370" />
+              </Paper>
+              <Typography
+                variant="subtitle2"
+                sx={{
+                  marginBottom: 5,
+                  textAlign: 'center',
+                }}
+              >
+                Título da Comics
+              </Typography>
+            </Grid>
+            <Grid item xs={3}>
+              <Paper
+                elevation={2}
+                sx={{
+                  maxWidth: 345,
+                  height: 230,
+                  marginBottom: 2,
+                  borderRadius: 0,
+                }}
+              >
+                <img src="" alt="Imagem da Comics" width="370" />
+              </Paper>
+              <Typography
+                variant="subtitle2"
+                sx={{
+                  marginBottom: 5,
+                  textAlign: 'center',
+                }}
+              >
+                Título da Comics
+              </Typography>
+            </Grid>
+            <Grid item xs={3}>
+              <Paper
+                elevation={2}
+                sx={{
+                  maxWidth: 345,
+                  height: 230,
+                  marginBottom: 2,
+                  borderRadius: 0,
+                }}
+              >
+                <img src="" alt="Imagem da Comics" width="370" />
+              </Paper>
+              <Typography
+                variant="subtitle2"
+                sx={{
+                  marginBottom: 5,
+                  textAlign: 'center',
+                }}
+              >
+                Título da Comics
+              </Typography>
+            </Grid>
             <Grid item xs={3}>
               <Paper
                 elevation={2}
